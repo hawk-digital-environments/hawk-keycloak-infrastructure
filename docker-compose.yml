@@ -4,8 +4,8 @@ services:
     build:
       context: .
       args:
-        - KEYCLOAK_VERSION=26.1
-    command: start --verbose --import-realm
+        - KEYCLOAK_VERSION=26.4.0
+    command: start-dev --verbose --import-realm --spi-theme-static-max-age=-1 --spi-theme-cache-themes=false --spi-theme-cache-templates=false
     environment:
       KC_HOSTNAME: http://localhost:8088
       KC_HTTP_ENABLED: true
@@ -18,7 +18,8 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
     volumes:
       - ./data:/opt/keycloak/data/import
-    restart: always
+      - ./themes:/opt/keycloak/themes
+    restart: no
     ports:
       - ${DOCKER_PROJECT_IP:-127.0.0.1}:8088:8080
     extra_hosts:

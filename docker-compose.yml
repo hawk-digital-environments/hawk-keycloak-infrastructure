@@ -1,6 +1,7 @@
 services:
   keycloak:
     image: hawk-keycloak-dev
+    container_name: keycloak.hawk.docker
     build:
       context: .
       args:
@@ -25,7 +26,7 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
     networks:
-      - net
+      - keycloak_hawk_net
       - default
 
   keycloak-mysql:
@@ -53,5 +54,11 @@ volumes:
     driver: local
 
 networks:
-  net:
+  # This network allows other projects to connect to the provided Keycloak instance.
+  # Simply add the other project's container to this network, and access keycloak using the container
+  # name 'keycloak.hawk.docker' on port 80 or 443.
+  # Note: This is a docker internal network only, not exposed to the host machine; so you will have to access
+  # Keycloak differently from your host machine (e.g., via localhost:8088).
+  keycloak_hawk_net:
+    name: keycloak_hawk_net
     driver: bridge

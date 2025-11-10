@@ -21,7 +21,7 @@ The server will be available on `http://localhost:8088` and can be accessed as u
 
 ## Usage in your docker compose
 
-After you launched the server, the `hawk_keycloak_net` will be available to be used by other services.
+After you launched the server, the `keycloak_hawk_net` network will be available to be used by other services.
 You can use the network in your own docker-compose file like this:
 
 ```yaml
@@ -29,14 +29,15 @@ services:
   my-service:
     image: my-service
     networks:
-      - hawk_keycloak_net
+      - keycloak_hawk_net
       - default
 networks:
-  hawk_keycloak_net:
+  keycloak_hawk_net:
+    name: keycloak_hawk_net
     external: true
 ```
 
-After you adjusted your service, only ensure that the keycloak server is running and you can access it from your service.
+After you adjusted your service, it will be able to access the keycloak server on the hostname `keycloak.hawk.docker`.
 
 ## Default realm (dev)
 
@@ -56,9 +57,7 @@ To connect with it use the following settings:
 - realm: `dev`
 - clientId: `hawk`
 - clientSecret: `RHQjrfnuMcYDJqepveiGNDH45ZtpFrLv`
-- internalKeycloakUrl: `http://keycloak:8080`
-
-For the `internalKeycloakUrl` to work, you need to use the `hawk_keycloak_net` network in your service.
+- internalKeycloakUrl: `http://keycloak.hawk.docker:8080` (use this when connecting from another docker container)
 
 ## Restoring the factory settings
 

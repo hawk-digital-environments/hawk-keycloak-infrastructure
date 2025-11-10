@@ -26,3 +26,8 @@ docker-compose.override.yml
 
 # No themes
 themes
+theme/base/*
+theme/keycloak/*
+theme/keycloak.v2/*
+META-INF
+org.keycloak.keycloak-themes-*.jar
